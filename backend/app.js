@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();  // Load variables from .env
+const taskRoutes = require('./routes/tasks');
 
 const app = express();
 
@@ -18,7 +19,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // Routes
 // (We will add our routes here, e.g., app.use('/api/tasks', taskRoutes))
-
+app.use('/api/tasks', taskRoutes);
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
