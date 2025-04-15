@@ -85,36 +85,6 @@ describe('TaskListComponent', () => {
     expect(component.tasks.length).toBe(1);
     expect(component.tasks).not.toContain(task1);
   });
-/** * 
- * 
- * Exercise: add a test to simulate toggling the filter and verifying that only the expected tasks are returned:
-\
-//ANSWER:
-/** 
-  it('should filter out completed tasks when showCompleted is false', () => {
-    // Create some dummy tasks. One is incomplete and one is completed.
-    const dummyTasks: Task[] = [
-      { _id: 't1', name: 'Incomplete Task', completed: false },
-      { _id: 't2', name: 'Completed Task', completed: true }
-    ];
-  
-    // Trigger ngOnInit() by calling detectChanges(), which will make the GET request.
-    fixture.detectChanges();
-  
-    // Capture the GET request to load tasks and flush our dummyTasks array.
-    const req = httpMock.expectOne(API_URL);
-    expect(req.request.method).toBe('GET');
-    req.flush(dummyTasks);
-  
-    // Now update the component view.
-    fixture.detectChanges();
-  
-    // For this exercise, we're testing the filtering functionality.
-    // Set the flag to hide completed tasks.
-    component.showCompleted = false;
-  
-    // Now, filteredTasks should only contain the incomplete task.
-    expect(component.filteredTasks).toEqual([{ _id: 't1', name: 'Incomplete Task', completed: false }]);
-  });
-  */
+ 
+  //Exercise: add a test to simulate toggling the filter and verifying that only the expected tasks are returned:
 });
