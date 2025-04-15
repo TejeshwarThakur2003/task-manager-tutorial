@@ -1,0 +1,5 @@
+/* Style for completed task text */
+.completed {
+    text-decoration: line-through;
+    color: gray;
+  }

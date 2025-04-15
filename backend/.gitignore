@@ -1,2 +1,26 @@
+# Create .gitignore file
+cat > .gitignore << 'EOF'
+# Dependencies
 node_modules/
+
+# Environment files
 .env
+
+# Build outputs
+dist/
+build/
+*.log
+
+# Angular specific
+.angular/
+.sass-cache/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# MongoDB
+*.pem
+EOF

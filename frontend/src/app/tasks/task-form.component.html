@@ -1,0 +1,11 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="mb-3">
+    <div class="mb-3">
+      <label for="name" class="form-label">New Task</label>
+      <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter task description" required>
+      <!-- Validation error message -->
+      <div class="text-danger" *ngIf="taskForm.get('name')?.invalid && (taskForm.get('name')?.touched || taskForm.get('name')?.dirty)">
+        * Task name is required.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">Add Task</button>
+  </form>
