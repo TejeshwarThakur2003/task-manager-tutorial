@@ -33,14 +33,4 @@ export class TaskService {
   }
 
   // EXERCISE:1 Create a new method called getPendingTasksCount. It should accept a parameter tasks: Task[] and return a number.
-  /**
- * Returns the number of tasks that are not completed.
- * @param tasks Array of Task objects.
- 
-  getPendingTasksCount(tasks: Task[]): number {
-    // Solution:
-    // We filter the tasks that are not completed and return the count.
-    return tasks.filter(task => !task.completed).length;
-  }
- */
 }
