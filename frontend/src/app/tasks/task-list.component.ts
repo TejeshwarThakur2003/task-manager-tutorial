@@ -10,8 +10,10 @@ import { Task } from '../models/task.model';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css']
 })
+
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
+  showCompleted: boolean = true; // default to showing all tasks
 
   constructor(private taskService: TaskService) {}
 
@@ -51,5 +53,15 @@ export class TaskListComponent implements OnInit {
         console.error('Failed to delete task', err);
       }
     });
+  }
+
+  // New method: Toggle the flag for showing completed tasks.
+  toggleShowCompleted(): void {
+    this.showCompleted = !this.showCompleted;
+  }
+
+  // New getter: Returns tasks based on the showCompleted flag.
+  get filteredTasks(): Task[] {
+    return this.showCompleted ? this.tasks : this.tasks.filter(task => !task.completed);
   }
 }

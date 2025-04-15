@@ -7,7 +7,7 @@ import { Task } from '../models/task.model';
   providedIn: 'root'
 })
 export class TaskService {
-  // Base URL for the tasks API (assuming backend is running on localhost:3000)
+  // Base URL for the tasks API
   private readonly baseUrl = 'http://localhost:3000/api/tasks';
 
   constructor(private http: HttpClient) {}
@@ -31,4 +31,16 @@ export class TaskService {
   deleteTask(taskId: string): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(`${this.baseUrl}/${taskId}`);
   }
+
+  // EXERCISE:1 Create a new method called getPendingTasksCount. It should accept a parameter tasks: Task[] and return a number.
+  /**
+ * Returns the number of tasks that are not completed.
+ * @param tasks Array of Task objects.
+ 
+  getPendingTasksCount(tasks: Task[]): number {
+    // Solution:
+    // We filter the tasks that are not completed and return the count.
+    return tasks.filter(task => !task.completed).length;
+  }
+ */
 }

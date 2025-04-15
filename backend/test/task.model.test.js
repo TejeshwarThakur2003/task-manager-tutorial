@@ -1,4 +1,3 @@
-// backend/test/task.model.test.js
 const chai = require('chai');
 const expect = chai.expect;
 const Task = require('../models/Task');

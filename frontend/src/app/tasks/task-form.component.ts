@@ -16,7 +16,7 @@ export class TaskFormComponent implements OnInit {
   taskForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private taskService: TaskService) {}
-
+  
   ngOnInit(): void {
     this.taskForm = this.fb.group({
       name: ['', [Validators.required]]

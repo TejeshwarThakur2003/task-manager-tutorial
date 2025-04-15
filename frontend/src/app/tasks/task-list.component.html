@@ -1,23 +1,28 @@
-<!-- Message when there are no tasks -->
-<div *ngIf="tasks.length === 0" class="alert alert-info">
-    No tasks found. Add a new task above.
-  </div>
-  
-  <!-- List of tasks -->
-  <ul *ngIf="tasks.length > 0" class="list-group">
-    <li *ngFor="let task of tasks" class="list-group-item d-flex justify-content-between align-items-center">
-      <div>
-        <!-- Checkbox to mark completion -->
-        <input type="checkbox"
-               [checked]="task.completed"
-               (change)="completeTask(task)"
-               [disabled]="task.completed" />
-        <!-- Task name, struck-through if completed -->
-        <span [ngClass]="{'completed': task.completed}" class="ms-2">{{ task.name }}</span>
-      </div>
-      <!-- Delete button -->
-      <button class="btn btn-sm btn-danger" (click)="deleteTask(task)">
-        Delete
-      </button>
-    </li>
-  </ul>
+<!-- Toggle button to show/hide completed tasks -->
+<button (click)="toggleShowCompleted()" class="btn btn-secondary mb-3">
+  {{ showCompleted ? 'Hide Completed' : 'Show Completed' }}
+</button>
+
+<!-- Message when there are no tasks in filteredTasks -->
+<div *ngIf="filteredTasks.length === 0" class="alert alert-info">
+  No tasks found. Add a new task above.
+</div>
+
+<!-- List of tasks using filteredTasks -->
+<ul *ngIf="filteredTasks.length > 0" class="list-group">
+  <li *ngFor="let task of filteredTasks" class="list-group-item d-flex justify-content-between align-items-center">
+    <div>
+      <!-- Checkbox to mark completion -->
+      <input type="checkbox"
+             [checked]="task.completed"
+             (change)="completeTask(task)"
+             [disabled]="task.completed" />
+      <!-- Task name, struck-through if completed -->
+      <span [ngClass]="{'completed': task.completed}" class="ms-2">{{ task.name }}</span>
+    </div>
+    <!-- Delete button -->
+    <button class="btn btn-sm btn-danger" (click)="deleteTask(task)">
+      Delete
+    </button>
+  </li>
+</ul>

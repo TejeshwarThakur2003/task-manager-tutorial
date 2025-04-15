@@ -92,4 +92,17 @@ describe('TaskService', () => {
 
     req.flush(deleteResponse);
   });
+    //EXERCISE:1 Add a method in the TaskService to count the number of tasks that are not completed. This will help us (and our tests) verify that we can easily get statistics from the task list.
+/** 
+it('should correctly count pending tasks', () => {
+    const tasks = [
+      { _id: '1', name: 'Task 1', completed: false },
+      { _id: '2', name: 'Task 2', completed: true },
+      { _id: '3', name: 'Task 3', completed: false }
+    ];
+   
+    const pendingCount = service.getPendingTasksCount(tasks);
+    expect(pendingCount).toEqual(2);
+  });
+  */
 });
