@@ -1,0 +1,680 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fmodern\fcharset0 Courier-Bold;\f2\fswiss\fcharset0 Helvetica;
+\f3\fnil\fcharset0 .SFNS-Regular;\f4\fnil\fcharset0 HelveticaNeue-Bold;\f5\fnil\fcharset0 .AppleSystemUIFontMonospaced-Regular;
+\f6\fnil\fcharset0 .SFNS-Bold;}
+{\colortbl;\red255\green255\blue255;\red135\green5\blue129;\red0\green0\blue0;\red20\green0\blue196;
+\red181\green0\blue19;\red14\green14\blue14;\red13\green100\blue1;\red151\green0\blue126;\red111\green90\blue30;
+}
+{\*\expandedcolortbl;;\cssrgb\c60784\c13725\c57647;\csgray\c0;\cssrgb\c10980\c0\c81176;
+\cssrgb\c76863\c10196\c8627;\cssrgb\c6700\c6700\c6700;\cssrgb\c0\c45490\c0;\cssrgb\c66667\c5098\c56863;\cssrgb\c51373\c42353\c15686;
+}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 # Interactive Exercise Handout\cf3 \
+\
+Hi team,\
+\
+In this handout, you\'92ll find two exercises designed to help you learn by working directly on our Task Manager application. Follow the step\uc0\u8209 by\u8209 step instructions, check the provided sample solution, and run the tests to make sure your changes work as expected.\
+\
+---\
+\
+\cf2 ## Exercise 1: Extend TaskService to Count Pending Tasks\cf3 \
+\
+\cf2 ### Objective\cf3 \
+Add a new method in the TaskService that calculates the number of pending (incomplete) tasks from an array of tasks.\
+\
+\cf2 ### Files to Modify\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 -\cf3  
+\f1\b **Source File:**
+\f0\b0  \cf5 `src/app/services/task.service.ts`\cf3 \
+\cf4 -\cf3  
+\f1\b **Test File:**
+\f0\b0  \cf5 `src/app/services/task.service.spec.ts`\cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 ### Step-by-Step Instructions\cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 1.\cf3  
+\f1\b **Open the TaskService File**
+\f0\b0 \
+\cf4    -\cf3  Navigate to \cf5 `src/app/services/task.service.ts`\cf3 .\
+\cf4    -\cf3  This file contains all the methods for making HTTP calls to our backend API.\
+\
+\cf4 2.\cf3  
+\f1\b **Add the New Method**
+\f0\b0 \
+\cf4    -\cf3  Inside the \cf5 `TaskService`\cf3  class, add the following method:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf5      ```ts\
+     /**\
+      * Returns the number of tasks that are not completed.\
+      * @param tasks Array of Task objects.\
+      */\
+     getPendingTasksCount(tasks: Task[]): number \{\
+       // Filter tasks to only include those that are not completed,\
+       // and return the count.\
+       return tasks.filter(task => !task.completed).length;\
+     \}\
+     ```\
+   - **Filler Note:** I originally struggled to remember whether to use `filter` or a loop. It turns out `filter` is the most concise way!\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 3.\cf3  
+\f1\b **Write a Test Case**
+\f0\b0 \
+\cf4    -\cf3  Open \cf5 `src/app/services/task.service.spec.ts`\cf3 .\
+\cf4    -\cf3  Add a new test case to verify your new method works:\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf5      ```ts\
+     it('should correctly count pending tasks', () => \{\
+       // Arrange: Create a sample array with one completed and two incomplete tasks.\
+       const tasks = [\
+         \{ _id: '1', name: 'Task 1', completed: false \},\
+         \{ _id: '2', name: 'Task 2', completed: true \},\
+         \{ _id: '3', name: 'Task 3', completed: false \}\
+       ];\
+       \
+       // Act: Call the new getPendingTasksCount method.\
+       const pendingCount = service.getPendingTasksCount(tasks);\
+       \
+       // Assert: Expect the count of incomplete tasks to be 2.\
+       expect(pendingCount).toEqual(2);\
+     \});\
+     ```\
+   - **Filler Note:** I once wondered if I should also test with an empty array. That\'92s a great extension if you want extra practice!\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 4.\cf3  
+\f1\b **Run the Test**
+\f0\b0 \
+\cf4    -\cf3  Use the command \cf5 `ng test`\cf3  to run the frontend tests.\
+\cf4    -\cf3  Verify that your new test case passes and that you see a \'93green bar\'94 confirming success.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 ### Explanation\cf3 \
+This exercise teaches you how to extend our service logic by creating a helper function and then testing it. We use the \cf5 `filter()`\cf3  method to isolate the incomplete tasks, demonstrating an important JavaScript array method in a testing context. The test case confirms that our logic behaves correctly with a dummy array of tasks.\
+\
+---\
+\
+\cf2 ## Exercise 2: Add a Completed Tasks Filter Toggle in TaskListComponent\cf3 \
+\
+\cf2 ### Objective\cf3 \
+Enhance the TaskListComponent by adding a toggle button that lets users choose whether to display completed tasks. Modify the component to use a filtered list based on a new flag.\
+\
+\cf2 ### Files to Modify\cf3 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 -\cf3  
+\f1\b **Source File:**
+\f0\b0  \cf5 `src/app/tasks/task-list.component.ts`\cf3 \
+\cf4 -\cf3  
+\f1\b **Template File:**
+\f0\b0  \cf5 `src/app/tasks/task-list.component.html`\cf3 \
+\cf4 -\cf3  
+\f1\b **Test File:**
+\f0\b0  \cf5 `src/app/tasks/task-list.component.spec.ts`\cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf2 ### Step-by-Step Instructions\cf3 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 1.\cf3  
+\f1\b **Update Component Logic**
+\f0\b0 \
+\cf4    -\cf3  Open \cf5 `src/app/tasks/task-list.component.ts`\cf3 .\
+\cf4    -\cf3  Add a new boolean property \cf5 `showCompleted`\cf3  and initialize it to \cf5 `true`\cf3  (meaning all tasks are shown by default).\
+\cf4    -\cf3  Add a new method \cf5 `toggleShowCompleted()`\cf3  that flips this flag.\
+\cf4    -\cf3  Add a getter \cf5 `filteredTasks`\cf3  that returns:\
+\cf4      -\cf3  All tasks if \cf5 `showCompleted`\cf3  is \cf5 `true`\cf3 .\
+\cf4      -\cf3  Only tasks that are not completed if \cf5 `showCompleted`\cf3  is \cf5 `false`\cf3 .\
+\
+   
+\f1\b **Example Code:**
+\f0\b0 \
+   \cf5 ```ts\
+   export class TaskListComponent implements OnInit \{\
+     tasks: Task[] = [];\
+     showCompleted: boolean = true; // Default: show all tasks\
+\
+     constructor(private taskService: TaskService) \{\}\
+\
+     ngOnInit(): void \{\
+       this.loadTasks();\
+     \}\
+\
+     loadTasks(): void \{\
+       this.taskService.getTasks().subscribe(\{\
+         next: (taskArray: Task[]) => \{\
+           this.tasks = taskArray;\
+         \},\
+         error: (err: any) => \{\
+           console.error('Failed to load tasks', err);\
+         \}\
+       \});\
+     \}\
+\
+     completeTask(task: Task): void \{\
+       if (task.completed) return;\
+       this.taskService.updateTask(task._id!, \{ completed: true \}).subscribe(\{\
+         next: (updated: Task) => \{\
+           task.completed = updated.completed;\
+         \},\
+         error: (err: any) => \{\
+           console.error('Failed to complete task', err);\
+         \}\
+       \});\
+     \}\
+\
+     deleteTask(task: Task): void \{\
+       this.taskService.deleteTask(task._id!).subscribe(\{\
+         next: () => \{\
+           this.tasks = this.tasks.filter(t => t._id !== task._id);\
+         \},\
+         error: (err: any) => \{\
+           console.error('Failed to delete task', err);\
+         \}\
+       \});\
+     \}\
+\
+     // Toggle the showCompleted flag\
+     toggleShowCompleted(): void \{\
+       this.showCompleted = !this.showCompleted;\
+     \}\
+\
+     // Getter to return tasks based on the current filter setting\
+     get filteredTasks(): Task[] \{\
+       return this.showCompleted ? this.tasks : this.tasks.filter(task => !task.completed);\
+     \}\
+   \}
+\f2\fs24 \cf0 \
+\
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+
+\f3 \cf6 	2.	
+\f4\b Update the Template
+\f3\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	Open 
+\f5 src/app/tasks/task-list.component.html
+\f3 .\
+	\'95	Insert a toggle button at the top of the file.\
+	\'95	Modify the list to iterate over 
+\f5 filteredTasks
+\f3  instead of the raw 
+\f5 tasks
+\f3  array.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4\b \cf6 Example HTML:
+\f2\b0 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf7 <!-- Toggle button to show/hide completed tasks -->\cf3 \
+\cf8 <button (\cf9 click\cf8 )=\cf5 "toggleShowCompleted()"\cf8  \cf9 class\cf8 =\cf5 "btn btn-secondary mb-3"\cf8 >\cf3 \
+  \{\{ showCompleted ? 'Hide Completed' : 'Show Completed' \}\}\
+\cf8 </button>\cf3 \
+\
+\cf7 <!-- Message when no tasks are available after filtering -->\cf3 \
+\cf8 <div *\cf9 ngIf\cf8 =\cf5 "filteredTasks.length === 0"\cf8  \cf9 class\cf8 =\cf5 "alert alert-info"\cf8 >\cf3 \
+  No tasks found. Add a new task above.\
+\cf8 </div>\cf3 \
+\
+\cf7 <!-- List of tasks using filteredTasks -->\cf3 \
+\cf8 <ul *\cf9 ngIf\cf8 =\cf5 "filteredTasks.length > 0"\cf8  \cf9 class\cf8 =\cf5 "list-group"\cf8 >\cf3 \
+  \cf8 <li *\cf9 ngFor\cf8 =\cf5 "let task of filteredTasks"\cf8  \cf9 class\cf8 =\cf5 "list-group-item d-flex justify-content-between align-items-center"\cf8 >\cf3 \
+    \cf8 <div>\cf3 \
+      \cf7 <!-- Checkbox to mark completion -->\cf3 \
+      \cf8 <input \cf9 type\cf8 =\cf5 "checkbox"\cf8 \
+             [\cf9 checked\cf8 ]=\cf5 "task.completed"\cf8 \
+             (\cf9 change\cf8 )=\cf5 "completeTask(task)"\cf8 \
+             [\cf9 disabled\cf8 ]=\cf5 "task.completed"\cf8  />\cf3 \
+      \cf7 <!-- Task name, struck-through if completed -->\cf3 \
+      \cf8 <span [\cf9 ngClass\cf8 ]=\cf5 "\{'completed': task.completed\}"\cf8  \cf9 class\cf8 =\cf5 "ms-2"\cf8 >\cf3 \{\{ task.name \}\}\cf8 </span>\cf3 \
+    \cf8 </div>\cf3 \
+    \cf7 <!-- Delete button -->\cf3 \
+    \cf8 <button \cf9 class\cf8 =\cf5 "btn btn-sm btn-danger"\cf8  (\cf9 click\cf8 )=\cf5 "deleteTask(task)"\cf8 >\cf3 \
+      Delete\
+    \cf8 </button>\cf3 \
+  \cf8 </li>\cf3 \
+\cf8 </ul>
+\f2\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf6 	3.	
+\f4\b Add a Test for Filtering
+\f3\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	Open 
+\f5 src/app/tasks/task-list.component.spec.ts
+\f3 .\
+	\'95	Add a test case that:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	Simulates loading tasks using a dummy data array.\
+	\'95	Sets 
+\f5 showCompleted
+\f3  to 
+\f5 false
+\f3 .\
+	\'95	Verifies that 
+\f5 filteredTasks
+\f3  returns only incomplete tasks.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4\b \cf6 Example Test Code:
+\f2\b0 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 it(\cf5 'should filter out completed tasks when showCompleted is false'\cf3 , () => \{\
+  \cf7 // Arrange: Define dummy tasks with one incomplete and one completed.\cf3 \
+  \cf8 const\cf3  \cf9 dummyTasks\cf3 : Task[] = [\
+    \{ \cf9 _id\cf3 : \cf5 't1'\cf3 , \cf9 name\cf3 : \cf5 'Incomplete Task'\cf3 , \cf9 completed\cf3 : \cf8 false\cf3  \},\
+    \{ \cf9 _id\cf3 : \cf5 't2'\cf3 , \cf9 name\cf3 : \cf5 'Completed Task'\cf3 , \cf9 completed\cf3 : \cf8 true\cf3  \}\
+  ];\
+  \
+  \cf7 // Trigger loadTasks by calling fixture.detectChanges()\cf3 \
+  fixture.detectChanges();\
+  \cf8 const\cf3  req = httpMock.expectOne(API_URL);\
+  expect(req.request.method).toBe(\cf5 'GET'\cf3 );\
+  req.flush(dummyTasks);\
+  fixture.detectChanges();\
+  \
+  \cf7 // Act: Set showCompleted to false to hide completed tasks.\cf3 \
+  component.showCompleted = \cf8 false\cf3 ;\
+  \
+  \cf7 // Assert: filteredTasks should only contain the incomplete task.\cf3 \
+  expect(component.filteredTasks).toEqual([\
+    \{ \cf9 _id\cf3 : \cf5 't1'\cf3 , \cf9 name\cf3 : \cf5 'Incomplete Task'\cf3 , \cf9 completed\cf3 : \cf8 false\cf3  \}\
+  ]);\
+\});
+\f2\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf6 	4.	
+\f4\b Run the Test
+\f3\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	Execute 
+\f5 ng test
+\f3  in the frontend folder to ensure your tests pass.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f6\b\fs26 \cf6 Explanation
+\f3\b0\fs24 \cf6 \
+\
+This exercise helps you learn two key aspects:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Service Extension:
+\f3\b0  How to add a utility function to our TaskService, complete with a corresponding unit test.\
+	\'95	
+\f4\b Component Filtering:
+\f3\b0  How to enhance a component so that it dynamically filters its displayed data based on a user-controlled flag.\
+In this exercise, you\'92ll:\
+	\'95	Implement the new logic in the TaskListComponent.\
+	\'95	Update the template to add a user-toggle.\
+	\'95	Write a test case to confirm the toggle behaves as expected.\
+\
+Follow these instructions step by step, and check your work against the sample solutions provided here.\
+\
+Happy coding and testing!
+\f2 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 ---\
+\
+## CHEATSHEET.md\
+\
+```markdown\
+# Unit Testing Cheat Sheet \'96 MEAN Task Manager\
+\
+Hey team,\
+\
+Below is a quick reference guide to help you remember key commands and best practices \cf8 for\cf3  writing unit tests in our application.\
+\
+---\
+\
+## Commands\
+\
+- **Backend:**\
+  - Install dependencies: `npm install` (in the backend folder)\
+  - Start server: `npm start`\
+  - Run tests: `npm test`\
+\
+- **Frontend (Angular):**\
+  - Install dependencies: `npm install` (in the frontend folder)\
+  - Serve app: `ng serve --open`\
+  - Run tests: `ng test`\
+  - Build production: `ng build`\
+\
+---\
+\
+## Angular Testing Essentials\
+\
+- **TestBed:** Configure a testing \cf8 module\cf3  to simulate the Angular environment.\
+  ```ts\
+  TestBed.configureTestingModule(\{\
+    imports: [YourComponent, HttpClientTestingModule],\
+    providers: [YourService]\
+  \});
+\f2\fs24 \cf0 \
+\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+
+\f3 \cf6 	\'95	
+\f4\b Basic Structure of a Spec File:
+\f2\b0 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 describe(\cf5 'YourComponent'\cf3 , () => \{\
+  it(\cf5 'should perform a specific behavior'\cf3 , () => \{\
+    \cf7 // Arrange\cf3 \
+    \cf7 // Act\cf3 \
+    \cf7 // Assert\cf3 \
+  \});\
+\});
+\f2\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Assertions:
+\f3\b0  Use Jasmine\'92s 
+\f5 expect()
+\f3  function.
+\f2 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 expect(actualValue).toEqual(expectedValue);
+\f2\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Common Validators:
+\f3\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f5 Validators.required
+\f3  ensures a field isn\'92t empty.\
+	\'95	
+\f5 Validators.minLength(3)
+\f3  enforces a minimum length.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f6\b\fs30 \cf6 Node Testing Essentials
+\f3\b0\fs24 \cf6 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Mocha Structure:
+\f2\b0 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 describe(\cf5 'Test Suite'\cf3 , \cf8 function\cf3 () \{\
+  it(\cf5 'should do something'\cf3 , \cf8 function\cf3 () \{\
+    \cf7 // Test code\cf3 \
+  \});\
+\});
+\f2\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Chai Assertions:
+\f2\b0 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 expect(value).to.equal(expectedValue);\
+expect(value).to.be.a(\cf5 'string'\cf3 );
+\f2\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f6\b\fs30 \cf6 Best Practices
+\f3\b0\fs24 \cf6 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	Keep tests 
+\f4\b isolated
+\f3\b0  by mocking external dependencies.\
+	\'95	Write 
+\f4\b small
+\f3\b0 , focused tests for specific behaviors.\
+	\'95	Use 
+\f4\b descriptive names
+\f3\b0  for your test cases.\
+	\'95	Run tests frequently for 
+\f4\b fast feedback
+\f3\b0 .\
+	\'95	Consider integrating CI tools (like GitHub Actions) for continuous testing.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f3 \cf6 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f6\b\fs30 \cf6 Key Concepts
+\f3\b0\fs24 \cf6 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Test Pyramid:
+\f3\b0 \
+Unit tests are the base\'97fast, numerous, and low-level.\
+	\'95	
+\f4\b Red/Green/Refactor Cycle:
+\f3\b0 \
+\pard\tqr\tx620\tx780\li780\fi-780\sl324\slmult1\sb240\partightenfactor0
+\cf6 	1.	Write a failing test (red).\
+	2.	Write code to pass the test (green).\
+	3.	Refactor the code while keeping tests green.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf6 	\'95	
+\f4\b Mocking HTTP Requests:
+\f3\b0 \
+Use HttpClientTestingModule in Angular to simulate backend responses.\
+\
+Keep this cheat sheet handy during development and testing. Happy testing!
+\f2 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf3 ---\
+\
+## DEVELOPER_GUIDE.md\
+\
+```markdown\
+# Developer Guide \cf8 for\cf3  the Task Manager Application\
+\
+Hello team,\
+\
+This guide provides a comprehensive walkthrough of our MEAN Task Manager application. It explains the architecture, key code components, and our testing approach. Use it as a reference whenever you need to review how our application is built or when extending functionality.\
+\
+---\
+\
+## Overall Architecture\
+\
+Our application is divided into two main parts:\
+- **Backend:** A Node.js/Express API using MongoDB (via Mongoose) \cf8 for\cf3  data storage.\
+- **Frontend:** An Angular application built with standalone components, making use of Angular\'92s built-in testing (Jasmine & Karma).\
+\
+The frontend and backend communicate over HTTP\'97the Angular TaskService interacts with the Express API to perform CRUD operations on tasks.\
+\
+---\
+\
+## Backend Overview\
+\
+### Key Files & Components\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 1.\cf3  **app.js**\
+   - **Purpose:** Main entry point \cf8 for\cf3  the Express server.\
+   - **Key Functions:**\
+     - Loads environment variables from `.env`.\
+     - Connects to MongoDB using Mongoose.\
+     - Sets up middleware (CORS, JSON parsing).\
+     - Registers routes from `routes/tasks.js`.\
+     - Listens on a designated port (\cf8 default\cf3 : \cf4 3000\cf3 ).\
+   - **Common Issue:** Watch \cf8 for\cf3  any typos in environment variable names. A missing `MONGODB_URI` can cause connection errors.\
+\
+\cf4 2.\cf3  **models/Task.js**\
+   - **Purpose:** Defines the Task schema.\
+   - **Fields:** `name` (required), `completed` (Boolean, defaults to \cf8 false\cf3 ).\
+   - **Additional Info:** Timestamps are enabled \cf8 for\cf3  creation and updates.\
+\
+\cf4 3.\cf3  **controllers/taskController.js**\
+   - **Purpose:** Contains the logic \cf8 for\cf3  handling requests.\
+   - **Functions:** `getTasks()`, `createTask()`, `updateTask()`, and `deleteTask()`.\
+   - **Tip:** Check your error messages in the console to understand \cf8 if\cf3  a task isn\'92t found or \cf8 if\cf3  a request failed.\
+\
+\cf4 4.\cf3  **routes/tasks.js**\
+   - **Purpose:** Maps HTTP endpoints to controller functions.\
+   - **Endpoints:** GET, POST, PUT, DELETE \cf8 for\cf3  `/api/tasks`.\
+\
+\cf4 5.\cf3  **Backend Tests**\
+   - **Located In:** `test/task.model.test.js`\
+   - **Purpose:** Validate that the Task model behaves correctly (e.g., \cf8 default\cf3  values, validations).\
+\
+---\
+\
+## Frontend Overview\
+\
+### Key Files & Components\
+\
+\cf4 1.\cf3  **main.ts & app.config.ts**\
+   - **main.ts:** Bootstraps the Angular app using `bootstrapApplication()`.\
+   - **app.config.ts:** Provides global providers (like HttpClient) needed by our application.\
+\
+\cf4 2.\cf3  **AppComponent**\
+   - **Files:** `app.component.ts`, `app.component.html`, `app.component.css`\
+   - **Purpose:** The root component that sets the stage \cf8 for\cf3  our application. It holds a `title` property and integrates the TaskFormComponent and TaskListComponent.\
+\
+\cf4 3.\cf3  **Models (task.model.ts)**\
+   - **Purpose:** Defines the structure of a Task in our app using a TypeScript interface.\
+   - **Key Fields:** `_id`, `name`, `completed`, and optional timestamps.\
+\
+\cf4 4.\cf3  **Services (task.service.ts)**\
+   - **Purpose:** Encapsulates communication with the backend.\
+   - **Methods:**  \
+     - `getTasks()`, `createTask(task)`, `updateTask(taskId, changes)`, `deleteTask(taskId)`.\
+     - *Extension Exercise:* `getPendingTasksCount(tasks: Task[]): number` \'96 counts incomplete tasks.\
+   - **Testing:** Uses Angular\'92s HttpClientTestingModule to simulate HTTP responses.\
+\
+\cf4 5.\cf3  **TaskListComponent**\
+   - **Files:** `task-list.component.ts`, `task-list.component.html`, `task-list.component.css`\
+   - **Purpose:** Displays tasks loaded from the backend.\
+   - **Features:**\
+     - Automatically loads tasks.\
+     - Allows marking tasks complete and deleting tasks.\
+     - *Exercise:* Includes a toggle filter to show or hide completed tasks.\
+   - **Testing:** Spec file verifies filtering logic and user interactions.\
+\
+\cf4 6.\cf3  **TaskFormComponent**\
+   - **Files:** `task-form.component.ts`, `task-form.component.html`, `task-form.component.css`\
+   - **Purpose:** Provides a form to add \cf8 new\cf3  tasks.\
+   - **Features:**\
+     - Uses Reactive Forms \cf8 for\cf3  validation.\
+     - Calls the TaskService to create tasks.\
+     - Emits events when a \cf8 new\cf3  task is added.\
+   - **Tip:** Always check that the form is marked as invalid \cf8 if\cf3  the task name is too short or missing.\
+\
+\cf4 7.\cf3  **Frontend Tests**\
+   - **Located In:** Various `.spec.ts` files (e.g., \cf8 for\cf3  TaskService and TaskListComponent)\
+   - **Purpose:** Validate component behavior, service interactions, and filtering logic.\
+\
+---\
+\
+## Testing Strategy & Best Practices\
+\
+- **Isolation:**  \
+  Always isolate your tests using mocks or stubs (e.g., HttpClientTestingModule \cf8 for\cf3  Angular).\
+  \
+- **Small Tests:**  \
+  Focus on one behavior per test. This keeps tests clear and easier to debug.\
+  \
+- **Consistent Structure:**  \
+  Both Angular and Mocha tests use `describe()` and `it()` blocks, which standardizes our testing approach.\
+  \
+- **Red/Green/Refactor Cycle:**  \
+  Write a failing test (red), implement the minimum code to pass it (green), and then refactor your code \cf8 while\cf3  keeping the tests passing.\
+\
+- **Continuous Feedback:**  \
+  Run tests frequently. A short, failing test is much better than undetected bugs later on!\
+\
+---\
+\
+## How to Run the Application and Tests\
+\
+- **Backend:**\
+  - Open a terminal and go to the `backend` folder.\
+  - Install dependencies:  \
+    ```bash\
+    npm install\
+    ```\
+  - Create a `.env` file (use the provided `.env.example` as a guide).\
+  - Start the server:  \
+    ```bash\
+    npm start\
+    ```\
+  - Run backend tests:  \
+    ```bash\
+    npm test\
+    ```\
+\
+- **Frontend:**\
+  - Open a separate terminal and go to the `frontend` folder.\
+  - Install dependencies:  \
+    ```bash\
+    npm install\
+    ```\
+  - Serve the application:  \
+    ```bash\
+    ng serve --open\
+    ```\
+  - Run frontend tests:  \
+    ```bash\
+    ng test\
+    ```
+\f2\fs24 \cf0 \
+}

@@ -1,0 +1,424 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 .SFNS-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fmodern\fcharset0 Courier;
+\f3\fmodern\fcharset0 Courier-Bold;\f4\fnil\fcharset0 .SFNS-Regular;\f5\fnil\fcharset0 HelveticaNeue-Bold;
+\f6\fnil\fcharset0 .AppleSystemUIFontMonospaced-Regular;\f7\fnil\fcharset0 .SFNS-RegularItalic;\f8\fnil\fcharset0 .AppleSystemUIFontMonospaced-RegularItalic;
+}
+{\colortbl;\red255\green255\blue255;\red14\green14\blue14;\red135\green5\blue129;\red0\green0\blue0;
+\red181\green0\blue19;\red20\green0\blue196;\red13\green100\blue1;\red151\green0\blue126;\red111\green90\blue30;
+}
+{\*\expandedcolortbl;;\cssrgb\c6700\c6700\c6700;\cssrgb\c60784\c13725\c57647;\csgray\c0;
+\cssrgb\c76863\c10196\c8627;\cssrgb\c10980\c0\c81176;\cssrgb\c0\c45490\c0;\cssrgb\c66667\c5098\c56863;\cssrgb\c51373\c42353\c15686;
+}
+\margl1440\margr1440\vieww30040\viewh18340\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 EXERCISES.md
+\f1\b0\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\fs28 \cf3 # Interactive Exercise Handout\cf4 \
+\
+Hi team,\
+\
+This document contains two interactive exercises designed to get you hands-on with our Task Manager application. Follow the instructions below to understand, modify, and test the application code. Each exercise includes step\uc0\u8209 by\u8209 step guidance as well as the sample solution for comparison.\
+\
+\cf3 ## Exercise 1: Extend TaskService to Count Pending Tasks\cf4 \
+\
+\cf3 ### Objective\cf4 \
+Add a method to count the number of pending (incomplete) tasks in the \cf5 `TaskService`\cf4 .\
+\
+\cf3 ### Where to Work\cf4 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf6 -\cf4  
+\f3\b **File:**
+\f2\b0  \cf5 `src/app/services/task.service.ts`\cf4 \
+\cf6 -\cf4  
+\f3\b **Test File:**
+\f2\b0  \cf5 `src/app/services/task.service.spec.ts`\cf4 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf3 ### Instructions\cf4 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf6 1.\cf4  
+\f3\b **Modify TaskService:**
+\f2\b0   \
+   Open \cf5 `src/app/services/task.service.ts`\cf4  and add the following method inside the \cf5 `TaskService`\cf4  class:\
+\
+   \cf5 ```ts\
+   /**\
+    * Returns the number of tasks that are not completed.\
+    * @param tasks Array of Task objects.\
+    */\
+   getPendingTasksCount(tasks: Task[]): number \{\
+     // Filter the tasks that are not completed and return the count.\
+     return tasks.filter(task => !task.completed).length;\
+   \}
+\f1\fs24 \cf0 \
+\
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+
+\f4 \cf2 	2.	
+\f5\b Write a Test Case:
+\f4\b0 \
+Open 
+\f6 src/app/services/task.service.spec.ts
+\f4  and add a new test case:
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\fs28 \cf4 it(\cf5 'should correctly count pending tasks'\cf4 , () => \{\
+  \cf7 // Arrange: Create a sample array with both completed and incomplete tasks.\cf4 \
+  \cf8 const\cf4  tasks = [\
+    \{ \cf9 _id\cf4 : \cf5 '1'\cf4 , \cf9 name\cf4 : \cf5 'Task 1'\cf4 , \cf9 completed\cf4 : \cf8 false\cf4  \},\
+    \{ \cf9 _id\cf4 : \cf5 '2'\cf4 , \cf9 name\cf4 : \cf5 'Task 2'\cf4 , \cf9 completed\cf4 : \cf8 true\cf4  \},\
+    \{ \cf9 _id\cf4 : \cf5 '3'\cf4 , \cf9 name\cf4 : \cf5 'Task 3'\cf4 , \cf9 completed\cf4 : \cf8 false\cf4  \}\
+  ];\
+  \
+  \cf7 // Act: Call the new getPendingTasksCount method.\cf4 \
+  \cf8 const\cf4  pendingCount = service.getPendingTasksCount(tasks);\
+  \
+  \cf7 // Assert: Expect the count to be 2.\cf4 \
+  expect(pendingCount).toEqual(\cf6 2\cf4 );\
+\});
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf2 	3.	
+\f5\b Run the Test:
+\f4\b0 \
+Execute 
+\f6 ng test
+\f4  to verify that the new test passes.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs26 \cf2 Explanation
+\f4\b0\fs24 \cf2 \
+\
+This exercise shows how to extend our service with custom logic and test that logic using unit tests. We\'92re using the array 
+\f6 filter()
+\f4  method to isolate tasks that are not completed and return the count. The test creates a dummy task list and confirms that the function returns the right number.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Exercise 2: Add a Completed Tasks Filter Toggle in TaskListComponent
+\f4\b0\fs24 \cf2 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs26 \cf2 Objective
+\f4\b0\fs24 \cf2 \
+\
+Add a toggle button in the TaskListComponent that lets users decide whether to show completed tasks or not.\
+\
+
+\f0\b\fs26 \cf2 Where to Work
+\f4\b0\fs24 \cf2 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f5\b File:
+\f4\b0  
+\f6 src/app/tasks/task-list.component.ts
+\f4 \
+	\'95	
+\f5\b Template:
+\f4\b0  
+\f6 src/app/tasks/task-list.component.html
+\f4 \
+	\'95	
+\f5\b Test File:
+\f4\b0  
+\f6 src/app/tasks/task-list.component.spec.ts
+\f4 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs26 \cf2 Instructions
+\f4\b0\fs24 \cf2 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf2 	1.	
+\f5\b Modify TaskListComponent (Logic):
+\f4\b0 \
+Open 
+\f6 src/app/tasks/task-list.component.ts
+\f4  and add the following:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	A boolean property 
+\f6 showCompleted
+\f4  (defaulting to true).\
+	\'95	A new method 
+\f6 toggleShowCompleted()
+\f4  to toggle this flag.\
+	\'95	A getter 
+\f6 filteredTasks
+\f4  that returns 
+\f6 this.tasks
+\f4  or only incomplete tasks based on 
+\f6 showCompleted
+\f4 .
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\fs28 \cf8 export\cf4  \cf8 class\cf4  TaskListComponent \cf8 implements\cf4  OnInit \{\
+  \cf9 tasks\cf4 : Task[] = [];\
+  \cf9 showCompleted\cf4 : boolean = \cf8 true\cf4 ; \cf7 // Default: show all tasks\cf4 \
+\
+  constructor(\cf8 private\cf4  \cf9 taskService\cf4 : TaskService) \{\}\
+\
+  ngOnInit(): void \{\
+    this.loadTasks();\
+  \}\
+\
+  loadTasks(): void \{\
+    this.taskService.getTasks().subscribe(\{\
+      \cf9 next\cf4 : (\cf9 taskArray\cf4 : Task[]) => \{\
+        this.tasks = taskArray;\
+      \},\
+      \cf9 error\cf4 : (\cf9 err\cf4 : any) => \{\
+        console.error(\cf5 'Failed to load tasks'\cf4 , err);\
+      \}\
+    \});\
+  \}\
+\
+  completeTask(\cf9 task\cf4 : Task): void \{\
+    \cf8 if\cf4  (task.completed) \cf8 return\cf4 ;\
+    this.taskService.updateTask(task._id!, \{ \cf9 completed\cf4 : \cf8 true\cf4  \}).subscribe(\{\
+      \cf9 next\cf4 : (\cf9 updated\cf4 : Task) => \{\
+        task.completed = updated.completed;\
+      \},\
+      \cf9 error\cf4 : (\cf9 err\cf4 : any) => \{\
+        console.error(\cf5 'Failed to complete task'\cf4 , err);\
+      \}\
+    \});\
+  \}\
+\
+  deleteTask(\cf9 task\cf4 : Task): void \{\
+    this.taskService.deleteTask(task._id!).subscribe(\{\
+      \cf9 next\cf4 : () => \{\
+        this.tasks = this.tasks.filter(t => t._id !== task._id);\
+      \},\
+      \cf9 error\cf4 : (\cf9 err\cf4 : any) => \{\
+        console.error(\cf5 'Failed to delete task'\cf4 , err);\
+      \}\
+    \});\
+  \}\
+\
+  \cf7 // New method to toggle the filter\cf4 \
+  toggleShowCompleted(): void \{\
+    this.showCompleted = !this.showCompleted;\
+  \}\
+\
+  \cf7 // Getter to return tasks based on the current filter setting\cf4 \
+  \cf8 get\cf4  filteredTasks(): Task[] \{\
+    \cf8 return\cf4  this.showCompleted ? this.tasks : this.tasks.filter(task => !task.completed);\
+  \}\
+\}
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf2 	2.	
+\f5\b Update the Template:
+\f4\b0 \
+Open 
+\f6 src/app/tasks/task-list.component.html
+\f4  and modify it as follows:
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\fs28 \cf7 <!-- Toggle button to show/hide completed tasks -->\cf4 \
+\cf8 <button (\cf9 click\cf8 )=\cf5 "toggleShowCompleted()"\cf8  \cf9 class\cf8 =\cf5 "btn btn-secondary mb-3"\cf8 >\cf4 \
+  \{\{ showCompleted ? 'Hide Completed' : 'Show Completed' \}\}\
+\cf8 </button>\cf4 \
+\
+\cf7 <!-- Message when no tasks are available after filtering -->\cf4 \
+\cf8 <div *\cf9 ngIf\cf8 =\cf5 "filteredTasks.length === 0"\cf8  \cf9 class\cf8 =\cf5 "alert alert-info"\cf8 >\cf4 \
+  No tasks found. Add a new task above.\
+\cf8 </div>\cf4 \
+\
+\cf7 <!-- List of tasks using filteredTasks -->\cf4 \
+\cf8 <ul *\cf9 ngIf\cf8 =\cf5 "filteredTasks.length > 0"\cf8  \cf9 class\cf8 =\cf5 "list-group"\cf8 >\cf4 \
+  \cf8 <li *\cf9 ngFor\cf8 =\cf5 "let task of filteredTasks"\cf8  \cf9 class\cf8 =\cf5 "list-group-item d-flex justify-content-between align-items-center"\cf8 >\cf4 \
+    \cf8 <div>\cf4 \
+      \cf7 <!-- Checkbox to mark completion -->\cf4 \
+      \cf8 <input \cf9 type\cf8 =\cf5 "checkbox"\cf8 \
+             [\cf9 checked\cf8 ]=\cf5 "task.completed"\cf8 \
+             (\cf9 change\cf8 )=\cf5 "completeTask(task)"\cf8 \
+             [\cf9 disabled\cf8 ]=\cf5 "task.completed"\cf8  />\cf4 \
+      \cf7 <!-- Task name, struck-through if completed -->\cf4 \
+      \cf8 <span [\cf9 ngClass\cf8 ]=\cf5 "\{'completed': task.completed\}"\cf8  \cf9 class\cf8 =\cf5 "ms-2"\cf8 >\cf4 \{\{ task.name \}\}\cf8 </span>\cf4 \
+    \cf8 </div>\cf4 \
+    \cf7 <!-- Delete button -->\cf4 \
+    \cf8 <button \cf9 class\cf8 =\cf5 "btn btn-sm btn-danger"\cf8  (\cf9 click\cf8 )=\cf5 "deleteTask(task)"\cf8 >\cf4 \
+      Delete\
+    \cf8 </button>\cf4 \
+  \cf8 </li>\cf4 \
+\cf8 </ul>
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf2 	3.	
+\f5\b Write a Test:
+\f4\b0 \
+In 
+\f6 src/app/tasks/task-list.component.spec.ts
+\f4 , add a test to verify that when 
+\f6 showCompleted
+\f4  is set to false, only incomplete tasks are returned:
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\fs28 \cf4 it(\cf5 'should filter out completed tasks when showCompleted is false'\cf4 , () => \{\
+  \cf7 // Arrange: Define dummy tasks\'97one completed and one incomplete.\cf4 \
+  \cf8 const\cf4  \cf9 dummyTasks\cf4 : Task[] = [\
+    \{ \cf9 _id\cf4 : \cf5 't1'\cf4 , \cf9 name\cf4 : \cf5 'Incomplete Task'\cf4 , \cf9 completed\cf4 : \cf8 false\cf4  \},\
+    \{ \cf9 _id\cf4 : \cf5 't2'\cf4 , \cf9 name\cf4 : \cf5 'Completed Task'\cf4 , \cf9 completed\cf4 : \cf8 true\cf4  \}\
+  ];\
+  \
+  \cf7 // Trigger loadTasks to simulate initialization.\cf4 \
+  fixture.detectChanges();\
+  \cf8 const\cf4  req = httpMock.expectOne(API_URL);\
+  expect(req.request.method).toBe(\cf5 'GET'\cf4 );\
+  req.flush(dummyTasks);\
+  fixture.detectChanges();\
+  \
+  \cf7 // Act: Set showCompleted to false.\cf4 \
+  component.showCompleted = \cf8 false\cf4 ;\
+  \
+  \cf7 // Assert: Verify that filteredTasks only includes the incomplete task.\cf4 \
+  expect(component.filteredTasks).toEqual([\{ \cf9 _id\cf4 : \cf5 't1'\cf4 , \cf9 name\cf4 : \cf5 'Incomplete Task'\cf4 , \cf9 completed\cf4 : \cf8 false\cf4  \}]);\
+\});
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tqr\tx220\tx380\li380\fi-380\sl324\slmult1\sb240\partightenfactor0
+\cf2 	4.	
+\f5\b Run Your Tests:
+\f4\b0 \
+Run the frontend tests (
+\f6 ng test
+\f4 ) and verify that all tests pass.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs26 \cf2 Explanation
+\f4\b0\fs24 \cf2 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f7\i \cf2 \'93In this exercise, we extend the TaskListComponent to let users filter the displayed tasks. We introduced a new boolean (
+\f8 \cf2 showCompleted
+\f7 \cf2 ) which determines if completed tasks should be shown. A toggle function allows users to change this flag, and a getter (
+\f8 \cf2 filteredTasks
+\f7 \cf2 ) applies the filter dynamically. The test simulates the environment by first loading dummy tasks, then changing 
+\f8 \cf2 showCompleted
+\f7 \cf2  and verifying that the computed filtered list matches expectations.\'94
+\f4\i0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Final Thoughts on the Exercises
+\f4\b0\fs24 \cf2 \
+\
+These exercises are designed to give a hands-on understanding of two important tasks:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Extending our service logic with new functionality and testing it.\
+	\'95	Updating component UI logic and verifying its behavior with unit tests.\
+\
+Make sure to walk your classmates through each step while explaining both the code and the underlying testing principles.\
+\
+Happy coding and testing!
+\f1 \cf0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f2\fs28 \cf4 \
+\
+
+\f1\fs24 \cf0 \uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Best Practices
+\f4\b0\fs24 \cf2 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f5\b Keep Tests Isolated:
+\f4\b0 \
+Use mocks/stubs to simulate external dependencies (like HTTP requests).\
+	\'95	
+\f5\b Write Small Tests:
+\f4\b0 \
+Each test should focus on one specific behavior.\
+	\'95	
+\f5\b Descriptive Names:
+\f4\b0 \
+Name your test cases clearly to reflect what they\'92re testing.\
+	\'95	
+\f5\b Fast Feedback:
+\f4\b0 \
+Keep unit tests fast so you can run them frequently during development.\
+	\'95	
+\f5\b Continuous Integration:
+\f4\b0 \
+Consider setting up CI (e.g., GitHub Actions) to run tests on each commit (optional, but a great practice).\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f4 \cf2 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Helpful Concepts
+\f4\b0\fs24 \cf2 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f5\b Test Pyramid:
+\f4\b0 \
+Unit tests form the base\'97fast and numerous, while integration and E2E tests are less frequent.\
+	\'95	
+\f5\b Red/Green/Refactor Cycle:
+\f4\b0 \
+\pard\tqr\tx620\tx780\li780\fi-780\sl324\slmult1\sb240\partightenfactor0
+\cf2 	1.	Write a failing test (red).\
+	2.	Write code to pass the test (green).\
+	3.	Refactor the code while keeping tests green.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f5\b Mocking HTTP Requests:
+\f4\b0 \
+Use HttpClientTestingModule in Angular to simulate HTTP responses without hitting a real server.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \
+}

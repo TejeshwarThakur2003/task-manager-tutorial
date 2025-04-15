@@ -1,0 +1,163 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red151\green0\blue126;\red20\green0\blue196;
+}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c66667\c5098\c56863;\cssrgb\c10980\c0\c81176;
+}
+\margl1440\margr1440\vieww30040\viewh18340\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 ## DEVELOPER_GUIDE.md\
+\
+```markdown\
+# Developer Guide \cf3 for\cf2  Task Manager Application\
+\
+Hello team,\
+\
+This guide will walk you through the overall architecture and key code components of our MEAN Task Manager application. It also explains our testing strategy, so you\'92ll have a clear understanding of how everything is structured, why we made certain design choices, and how to extend or modify the code as needed.\
+\
+---\
+\
+## Overall Architecture\
+\
+Our Task Manager application is split into two major parts:\
+- **Backend:** Built with Node.js, Express, and MongoDB (using Mongoose).\
+- **Frontend:** Built with Angular using the \cf3 new\cf2  standalone component architecture (no NgModule).\
+\
+Both parts communicate over HTTP\'97the Angular frontend uses HttpClient to interact with the Express API.\
+\
+---\
+\
+## Backend (Express/MongoDB)\
+\
+### Key Components\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\cf4 1.\cf2  **app.js**\
+   - **Purpose:** Entry point \cf3 for\cf2  the server.\
+   - **Functionality:**\
+     - Loads configuration via `.env`.\
+     - Connects to MongoDB using Mongoose.\
+     - Sets up middleware (CORS, JSON parsing).\
+     - Registers routes from `routes/tasks.js`.\
+     - Starts the server on a specified port.\
+     \
+\cf4 2.\cf2  **Models**\
+   - **File:** `models/Task.js`\
+   - **Purpose:** Defines the Task schema.\
+   - **Details:**\
+     - Fields: `name` (required string), `completed` (boolean, defaults to \cf3 false\cf2 ).\
+     - Timestamps are enabled.\
+   \
+\cf4 3.\cf2  **Controllers**\
+   - **File:** `controllers/taskController.js`\
+   - **Purpose:** Contains the logic \cf3 for\cf2  handling API requests:\
+     - `getTasks()`: Fetch tasks.\
+     - `createTask()`: Create a \cf3 new\cf2  task.\
+     - `updateTask()`: Update an existing task.\
+     - `deleteTask()`: Delete a task.\
+   - **Error Handling:** Gracefully handles errors by sending appropriate HTTP responses.\
+\
+\cf4 4.\cf2  **Routes**\
+   - **File:** `routes/tasks.js`\
+   - **Purpose:** Maps HTTP endpoints to the controller functions.\
+   - **Endpoints:**  \
+     - `GET /api/tasks`  \
+     - `POST /api/tasks`  \
+     - `PUT /api/tasks/:id`  \
+     - `DELETE /api/tasks/:id`\
+\
+\cf4 5.\cf2  **Testing**\
+   - **File:** `test/task.model.test.js`\
+   - **Purpose:** Tests the Task model\'92s validations (such as ensuring the `name` field is required and `completed` defaults correctly).\
+\
+---\
+\
+## Frontend (Angular)\
+\
+### Key Components and Files\
+\
+\cf4 1.\cf2  **main.ts & app.config.ts**\
+   - **main.ts:** Bootstraps the Angular application using `bootstrapApplication(AppComponent, appConfig)`.\
+   - **app.config.ts:** Provides global services like HttpClient using `provideHttpClient()`.\
+\
+\cf4 2.\cf2  **AppComponent**\
+   - **Files:** `app.component.ts`, `app.component.html`, `app.component.css`\
+   - **Purpose:** Serves as the root component.\
+   - **Key Details:**\
+     - Contains a `title` property (used in tests).\
+     - Embeds child components: TaskFormComponent and TaskListComponent.\
+\
+\cf4 3.\cf2  **Models**\
+   - **File:** `models/task.model.ts`\
+   - **Purpose:** Defines a TypeScript \cf3 interface\cf2  for a Task.\
+   - **Fields:** `_id`, `name`, `completed`, and optional timestamps.\
+\
+\cf4 4.\cf2  **Services**\
+   - **File:** `services/task.service.ts`\
+   - **Purpose:** Encapsulates HTTP calls to the backend.\
+   - **Methods:**\
+     - `getTasks()`\
+     - `createTask(task)`\
+     - `updateTask(taskId, changes)`\
+     - `deleteTask(taskId)`\
+     - *(Exercise Extension):* `getPendingTasksCount(tasks: Task[]): number` (returns the count of incomplete tasks)\
+   - **Testing:** Refer to `task.service.spec.ts` \cf3 for\cf2  tests that use HttpClientTestingModule.\
+\
+\cf4 5.\cf2  **TaskListComponent**\
+   - **Files:** `tasks/task-list.component.ts`, `tasks/task-list.component.html`, `tasks/task-list.component.css`\
+   - **Purpose:** Displays the list of tasks.\
+   - **Features:**\
+     - Loads tasks on init.\
+     - Provides functions to complete and delete tasks.\
+     - *(Exercise Extension):* Includes a \cf3 new\cf2  boolean property `showCompleted`, a toggle method, and a `filteredTasks` getter to filter displayed tasks.\
+   - **Testing:** See `tasks/task-list.component.spec.ts`.\
+\
+\cf4 6.\cf2  **TaskFormComponent**\
+   - **Files:** `tasks/task-form.component.ts`, `tasks/task-form.component.html`, `tasks/task-form.component.css`\
+   - **Purpose:** Provides a form \cf3 for\cf2  adding \cf3 new\cf2  tasks.\
+   - **Features:**\
+     - Uses Reactive Forms with validation (e.g., required and minimum length).\
+     - Calls TaskService to create tasks.\
+     - Emits an event when a task is added so the parent can refresh the list.\
+   - **Testing:** Check any tests in a corresponding spec file \cf3 if\cf2  available.\
+\
+---\
+\
+## Testing Strategy\
+\
+### Frontend Testing\
+- **Jasmine & Karma:**  \
+  - We use Jasmine \cf3 for\cf2  test cases and Karma as the test runner.\
+  - Tests cover services (to verify API calls with HttpClientTestingModule) and components (to check UI behavior and filtering logic).\
+  \
+- **Test Example:**  \
+  - TaskService tests ensure that methods such as `getTasks()` and `createTask()` work as expected.\
+  - TaskListComponent tests verify that our filtering logic (e.g., only showing non-completed tasks when `showCompleted` is \cf3 false\cf2 ) is functioning correctly.\
+\
+### Backend Testing\
+- **Mocha & Chai:**  \
+  - Tests are written \cf3 for\cf2  the Task model (verifying defaults and validations) and \cf3 for\cf2  controller functions.\
+  - We might stub database operations where necessary to isolate tests from actual database behavior.\
+\
+---\
+\
+## How to Run\
+\
+- **Backend:**  \
+  - Navigate to the backend folder, run `npm install` to install dependencies, then `npm start` to launch the server.  \
+  - Run backend tests with `npm test`.\
+\
+- **Frontend:**  \
+  - Navigate to the frontend folder, run `npm install`, then `ng serve --open` to start the Angular app.  \
+  - Run frontend tests with `ng test`.\
+\
+---\
+\
+## Conclusion\
+\
+This guide provides an overview of our Task Manager application, covering the key files, our architectural decisions, and our testing approaches. Use this document as a reference whenever you need to understand how a part of the application works or when extending functionality with \cf3 new\cf2  features and tests. If you have any questions or need further clarification, feel free to ask.\
+\
+Happy coding and testing!
+\f1\fs24 \cf0 \
+}

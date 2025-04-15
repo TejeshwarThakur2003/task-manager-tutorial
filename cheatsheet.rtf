@@ -1,0 +1,164 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;\f1\fswiss\fcharset0 Helvetica;\f2\fnil\fcharset0 .SFNS-Regular;
+\f3\fnil\fcharset0 HelveticaNeue-Bold;\f4\fnil\fcharset0 .AppleSystemUIFontMonospaced-Regular;\f5\fnil\fcharset0 .SFNS-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red151\green0\blue126;\red14\green14\blue14;
+\red181\green0\blue19;\red13\green100\blue1;}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c66667\c5098\c56863;\cssrgb\c6700\c6700\c6700;
+\cssrgb\c76863\c10196\c8627;\cssrgb\c0\c45490\c0;}
+\margl1440\margr1440\vieww30040\viewh18340\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 ## CHEATSHEET.md\
+\
+```markdown\
+# Unit Testing Cheat Sheet \cf3 for\cf2  MEAN Stack Task Manager\
+\
+Hey team,\
+\
+Here\'92s a quick reference guide covering essential commands, best practices, and key concepts to help you remember the unit testing process \cf3 for\cf2  our application.\
+\
+---\
+\
+## Commands\
+\
+- **Install Dependencies:**\
+  - Backend: `npm install` (inside the backend folder)\
+  - Frontend: `npm install` (inside the frontend folder)\
+\
+- **Run the Application:**\
+  - Backend: `npm start` (starts the Express server)\
+  - Frontend: `ng serve --open`\
+\
+- **Run Unit Tests:**\
+  - Frontend (Angular): `ng test`\
+  - Backend (Mocha): `npm test`\
+\
+- **Build the Frontend:**\
+  - `ng build`\
+\
+---\
+\
+## Angular Testing Essentials\
+\
+- **TestBed:**  \
+  Use TestBed to configure a testing \cf3 module\cf2  \cf3 for\cf2  your component or service.\
+  ```ts\
+  TestBed.configureTestingModule(\{\
+    imports: [YourComponent, HttpClientTestingModule],\
+    providers: [YourService]\
+  \});
+\f1\fs24 \cf0 \
+\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+
+\f2 \cf4 	\'95	
+\f3\b Spec Files:
+\f2\b0 \
+Files ending with 
+\f4 .spec.ts
+\f2  contain your test cases.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	Basic structure:
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 describe(\cf5 'YourComponent'\cf2 , () => \{\
+  it(\cf5 'should do something'\cf2 , () => \{\
+    \cf6 // Your test here\cf2 \
+  \});\
+\});
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2 \cf4 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	
+\f3\b Assertions:
+\f2\b0 \
+Jasmine\'92s 
+\f4 expect()
+\f2  is used to create readable assertions.
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 expect(value).toEqual(expectedValue);\
+expect(value).toBeTruthy();
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2 \cf4 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	
+\f3\b Common Validators:
+\f2\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	Use 
+\f4 Validators.required
+\f2  for required fields.\
+	\'95	Use 
+\f4 Validators.minLength(n)
+\f2  to enforce a minimum length.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \
+\uc0\u11835 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2 \cf4 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f5\b\fs30 \cf4 Node Testing Essentials
+\f2\b0\fs24 \cf4 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	
+\f3\b Mocha Structure:
+\f2\b0 \
+Uses 
+\f4 describe()
+\f2  and 
+\f4 it()
+\f2  for test suites and cases:
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 describe(\cf5 'Test Suite'\cf2 , \cf3 function\cf2 () \{\
+  it(\cf5 'should do something'\cf2 , \cf3 function\cf2 () \{\
+    \cf6 // Test code here\cf2 \
+  \});\
+\});
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2 \cf4 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	
+\f3\b Chai Assertions:
+\f2\b0 \
+For readable assertions:
+\f1 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs28 \cf2 expect(value).to.equal(expectedValue);\
+expect(value).to.be.a(\cf5 'string'\cf2 );
+\f1\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2 \cf4 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf4 	\'95	
+\f3\b Testing Express:
+\f2\b0 \
+Stub Mongoose methods or use SuperTest to simulate API calls.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1 \cf0 \
+}
