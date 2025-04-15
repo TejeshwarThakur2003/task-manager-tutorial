@@ -95,7 +95,6 @@ npm install
 
 npm start
 
-	•	The server will connect to MongoDB and listen on the port specified in .env (default is 3000).
 
 	5.	To run the backend unit tests (using Mocha/Chai):
 
@@ -116,9 +115,7 @@ npm install
 
 	3.	Start the Angular development server:
 
-ng serve --open
-
-	•	The app will launch in your default browser (usually at http://localhost:4200).
+ng serve --open 
 
 	4.	To run the frontend unit tests (using Jasmine/Karma):
 
